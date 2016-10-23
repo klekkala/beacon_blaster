@@ -6,7 +6,7 @@ def init(size):
     Screen = size
 class Player:
     def __init__(self):
-        self.position = [Screen[0]/2.0,Screen[1]/2.0]
+        self.position = [10,10]
         self.speed = [0.0,0.0]
         self.rotation = 0.0
         self.thrust = 0.0075
@@ -25,9 +25,10 @@ class Player:
         self.bullet_damage = 1
         self.bullet_speed = 1
         self.bomb_ammo = 0
+        self.TTL = 10
 
 
-class Beacon:
+class Asteroid:
     def __init__(self,x=None,y=None,size=None):
         if (x is not None) and (y is not None) and (size is not None):
             self.position = [x,y]
@@ -41,20 +42,14 @@ class Beacon:
         self.being_hit = 0
         self.rotation = 0
         self.rotate_speed = choice([-1,1])*(random()+0.5)*0.1
+        
     def get_radius(self):
         if   self.size == 5:  return 64.0
         elif self.size == 4:  return 51.0
         elif self.size == 3:  return 38.0
         elif self.size == 2:  return 26.0
         elif self.size == 1:  return 13.0
-class PowerUp:
-    def __init__(self, pos):
-        self.position = pos
-        self.frame = 1
-        self.time = 0
-        self.type = choice(["Weaponry","Shields","Thrust","Bomb"])
-        self.rotate = 0
-        self.speed = [(random()-0.5)*0.5,(random()-0.5)*0.5]
+
 class Bomb:
     def __init__(self, p, image):
         self.position = [p.position[0] + (-58*cos(radians(p.rotation))),
@@ -65,19 +60,12 @@ class Bomb:
         self.speed = [-cos(radians(p.rotation))+p.speed[0],
                       -sin(radians(p.rotation))+p.speed[1]]
 class Bullet:
-    def __init__(self, p, direction, rot):
+    def __init__(self, type, loc, speed, target):
         self.time = 0
-        self.damage = p.bullet_damage
-        self.type = p.weapon_type
-        if direction == "Forwards":     Angle = rot
-        elif direction == "Backwards":  Angle = rot - 180
-        elif direction == "Left Side":  Angle = rot - 90
-        elif direction == "Right Side": Angle = rot + 90
-        Angle = radians(Angle)
-        self.position = [p.position[0]+(-30*cos(Angle)),
-                         p.position[1]+( 30*sin(Angle))]
-        self.speed = [p.bullet_speed*(-cos(Angle))+p.speed[0],
-                      p.bullet_speed*( sin(Angle))+p.speed[1]]
+        self.type = type
+        self.speed = speed
+        self.pos = loc
+        self.targpos = target
 class Explosion:
     def __init__(self,type,size,pos):
         self.size = size
