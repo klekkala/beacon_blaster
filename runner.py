@@ -1,6 +1,6 @@
 ##import psyco
 ##psyco.full()
-import pygame
+import pygame,sys,pygame.mixer
 from pygame.locals import *
 import os, sys
 from math import *
@@ -11,11 +11,15 @@ pygame.init()
 
 Screen = (1300,720)
 size = width,height = 1280,720
+screen = pygame.display.set_mode(size)
+
+#b = pygame.image.load('space.png')
+
 pygame.display.set_caption("Beacon Blaster")
 icon = pygame.Surface((1,1)); icon.set_alpha(0); pygame.display.set_icon(icon)
 Surface = pygame.display.set_mode(Screen)
-bg = pygame.image.load('bg.jpg')
-bg = pygame.transform.scale(bg,size)
+#bg = pygame.image.load('b.jpg')
+#bg = pygame.transform.scale(bg,size)
 Explosions = []
 Asteroids = []
 Bullets = []
@@ -179,7 +183,10 @@ def rndint(number):
 
 def Draw():  
     #Clear
-    Surface.fill((0,0,0))
+    b= pygame.image.load('space.png')
+    b= pygame.transform.scale(b,Screen)
+    Surface.blit(b,(0,0))
+    #Surface.fill((0,0,0))
     #Self
     ToDraw = True
     for e in Explosions:
@@ -232,7 +239,8 @@ def Draw():
 
 
 def main():
-    Surface.blit(bg,(0,0))
+    #b = pygame.image.load('space.png')
+    #Surface.blit(bg,(0,0))
     p1.TTL = 10
     while True:
         GetInput()
