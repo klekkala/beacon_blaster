@@ -10,7 +10,7 @@ if sys.platform == 'win32' or sys.platform == 'win64':
 pygame.init()
 
 Screen = (1300,720)
-size = width,height = 1280,720
+size = width,height = 1300,720
 screen = pygame.display.set_mode(size)
 
 #b = pygame.image.load('space.png')
@@ -113,6 +113,7 @@ def GetInput():
 
     if button[0]:
         p1.TTL = p1.TTL-1
+        print p1.TTL
         loc = pygame.mouse.get_pos()
         p1.position[0] = loc[0]
         p1.position[1] = Screen[1]-loc[1]
@@ -184,6 +185,7 @@ def rndint(number):
 def Draw():  
     #Clear
     b= pygame.image.load('space.png')
+    
     b= pygame.transform.scale(b,Screen)
     Surface.blit(b,(0,0))
     #Surface.fill((0,0,0))
@@ -233,7 +235,7 @@ def Draw():
             Explosions.remove(e)
     #HUD: Basic Info.
         #Energy Bar
-
+    weapon_type = Font2.render("Plasma Blast", True, (200,200,200pppppppppppppppppppppppp    Surface.blit(weapon_type, (Screen[0]-62,(Screen[1]/2)-115))
     #Flip
     pygame.display.flip()
 
@@ -244,12 +246,11 @@ def main():
     p1.TTL = 10
     while True:
         GetInput()
-        #Update()
-        #BreakAsteroid()
-        #Die()
-        if p1.TTL is 0:
+        if p1.TTL is 1:
             Die()
             BreakAsteroid()
+
         Draw()
+
 
 if __name__ == '__main__': main()
